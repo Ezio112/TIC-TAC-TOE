@@ -52,11 +52,7 @@ function draw(i,j){
     block.textContent=mark;
     ++boxFilled;
 
-    if(boxFilled==9){
-      alert("Its a draw!\nReseting the board.")
-      resetButton();
-    }
-    else if(checkWinner()){
+    if(checkWinner()){
       alert("Player "+currentPlayer+" Won the game!.\nReseting the board.");
       if(currentPlayer==1){
         ++scorePlayer1;
@@ -66,6 +62,10 @@ function draw(i,j){
         ++scorePlayer2;
         document.querySelector("#scorePlayer2").textContent="Player 2: "+scorePlayer2;
       }
+      resetButton();
+    }
+    else if(boxFilled==9){
+      alert("Its a draw!\nReseting the board.")
       resetButton();
     }
     else{
