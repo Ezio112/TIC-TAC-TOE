@@ -1,6 +1,6 @@
 var table=document.querySelector(".gameBoard"), turnShow=document.querySelector("#turn");
 var scorePlayer1=0,scorePlayer2=0;
-var currentPlayer=1;
+var currentPlayer=1,boxFilled=0;
 var mark='X',otherMark='O';
 
 function getBlock(i,j){
@@ -28,6 +28,12 @@ function checkWinner(){
   return false;   //default case;
 }
 function resetButton(){
+  boxFilled=0;
+  currentPlayer=1;
+  mark="X";
+  otherMark="O";
+  turnShow.textContent="Player "+currentPlayer+"\'s turn."
+
   for(var i=0;i<3;++i){
     for(var j=0;j<3;++j){
       getBlock(i,j).textContent="";
@@ -38,8 +44,19 @@ function resetButton(){
 function draw(i,j){
   var block=getBlock(i,j);
   block.addEventListener("click",function(){
+    //To not to edit already filled box
+    if(block.textContent=='X' || block.textContent=='O'){
+      return;
+    }
+    //mark a box and counting
     block.textContent=mark;
-    if(checkWinner()){
+    ++boxFilled;
+
+    if(boxFilled==9){
+      alert("Its a draw!\nReseting the board.")
+      resetButton();
+    }
+    else if(checkWinner()){
       alert("Player "+currentPlayer+" Won the game!.\nReseting the board.");
       if(currentPlayer==1){
         ++scorePlayer1;
@@ -58,6 +75,7 @@ function draw(i,j){
     }
   });
 }
+
 for(var i=0;i<3;++i){
   for(var j=0;j<3;++j){
     draw(i,j);
